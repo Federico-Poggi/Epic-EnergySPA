@@ -6,9 +6,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import team6.epicenergyspa.exception.BadRequestException;
 import team6.epicenergyspa.model.Customer;
-import team6.epicenergyspa.payload.NewCustomerDTO;
-import team6.epicenergyspa.payload.NewCustomerRespDTO;
+import team6.epicenergyspa.payload.customer.NewCustomerDTO;
+import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
 import team6.epicenergyspa.service.CustomerService;
 
 @RestController

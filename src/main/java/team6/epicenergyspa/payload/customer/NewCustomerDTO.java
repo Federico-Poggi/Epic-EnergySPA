@@ -1,4 +1,4 @@
-package team6.epicenergyspa.payload;
+package team6.epicenergyspa.payload.customer;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;

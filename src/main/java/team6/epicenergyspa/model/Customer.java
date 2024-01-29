@@ -45,6 +45,4 @@ public class Customer {
     @Column(name="company_logo")
     private String companyLogo;
 
-
-
 }
