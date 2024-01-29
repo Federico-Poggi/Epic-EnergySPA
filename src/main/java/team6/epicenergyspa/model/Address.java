@@ -3,7 +3,6 @@ package team6.epicenergyspa.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,22 +13,25 @@ import java.util.UUID;
 public class Address  {
     //implements UserDetails
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private UUID id;
-    private String via;
-    private String civico;
-    private String località;
-    private int cap;
+    private long id;
+    private String street;
+    private String civic;
+    private String location;
+    private int zipCode;
     //comune
     // @ManyToOne
-    // @JoinColumn(name = "customer")
+    // @JoinColumn(name = "customer_id")
     // private Customer customer;
 
-    public Address(String via, String civico, String località, int cap) {
-        this.via = via;
-        this.civico = civico;
-        this.località = località;
-        this.cap = cap;
+
+    public Address(String street, String civic, String location, int zipCode) {
+        this.street = street;
+        this.civic = civic;
+        this.location = location;
+        this.zipCode = zipCode;
+        //
+        //
     }
 }
