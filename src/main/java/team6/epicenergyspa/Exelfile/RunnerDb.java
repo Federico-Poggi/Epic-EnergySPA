@@ -25,7 +25,9 @@ public class RunnerDb implements CommandLineRunner {
     public void run(String... args) throws Exception {
         CSVReader cs=new CSVReader();
         List<Province> province= cs.readProvince("src/main/java/team6/epicenergyspa/Exelfile/province-italiane.xlsx");
-        province.stream().forEach(province1 -> provinciaDAO.save(province1));
+        /*province.stream().forEach(province1 -> provinciaDAO.save(province1));*/
 
+        List<Comuni> comuniList=cs.readComuni("src/main/java/team6/epicenergyspa/Exelfile/comuni-italiani.xlsx");
+        /*comuniList.forEach(comuni -> comuniDAO.save(comuni));*/
     }
 }
