@@ -11,7 +11,6 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "address")
 public class Address  {
-    //implements UserDetails
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -24,7 +23,6 @@ public class Address  {
     // @ManyToOne
     // @JoinColumn(name = "customer_id")
     // private Customer customer;
-
 
     public Address(String street, String civic, String location, int zipCode) {
         this.street = street;

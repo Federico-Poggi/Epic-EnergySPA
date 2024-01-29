@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface BillsDAO extends JpaRepository<Bill,Long > {
-    Optional<Bill> findByNumeroFattura(Long numeroFattura);
+    Optional<Bill> findByBillNumber(Long billNumber);
 }
+
