@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import team6.epicenergyspa.model.Comuni;
+import team6.epicenergyspa.model.Province;
 import team6.epicenergyspa.repository.ComuniDAO;
 
 import java.util.ArrayList;
@@ -54,6 +55,33 @@ public class CSVReader {
         }
 
         return comuniList;
+    }
+    public List<Province> readProvince(String file) throws Exception {
+        workbook = new Workbook(file);
+        WorksheetCollection wc = workbook.getWorksheets();
+        List<Province> provinceList = new ArrayList<>();
+        //Qua otteniamo il foglio di lavoro
+        for (int collectionIndex = 0; collectionIndex < wc.getCount(); collectionIndex++) {
+            worksheet = wc.get(collectionIndex);
+            //Ora otteniamo il numero di colonne e righe
+            int row = worksheet.getCells().getMaxDataRow();
+            int column = worksheet.getCells().getMaxDataColumn();
+            for (int rwindex = 0; rwindex < row + 1; rwindex++) {
+                Province pro = new Province();
+                if (rwindex == 0) {
+                    continue;
+                }
+                for (int cellindex = 0; cellindex < column + 1; cellindex++) {
+                    System.out.println(worksheet.getCells().get(rwindex, cellindex).getValue() + ", ");
+                    pro.setSiglaProvincia(worksheet.getCells().get(rwindex, 0).getStringValue());
+                    pro.setProvincia(worksheet.getCells().get(rwindex, 1).getStringValue());
+                    pro.setRegione(worksheet.getCells().get(rwindex, 2).getStringValue());
+                    provinceList.add(pro);
+                }
+            }
+        }
+
+        return provinceList;
     }
 
 }
