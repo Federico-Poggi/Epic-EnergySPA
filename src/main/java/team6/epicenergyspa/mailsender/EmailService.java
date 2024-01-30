@@ -1,13 +1,15 @@
 package team6.epicenergyspa.mailsender;
 
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import team6.epicenergyspa.MailPayloadDTO;
+import team6.epicenergyspa.payload.MailPayloadDTO;
 
 @Service
+@NoArgsConstructor
 public class EmailService {
     @Autowired
     JavaMailSender javaMailSender;
