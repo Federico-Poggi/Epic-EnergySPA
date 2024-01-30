@@ -28,7 +28,7 @@ public class Municipality {
     private String provinceName;
 
     @ToString.Exclude
-    @ManyToOne (cascade = CascadeType.ALL, optional = false)
+    @ManyToOne (optional = false)
     @JoinColumn (name = "province_id", nullable = false)
     private Province province;
 
