@@ -7,10 +7,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.model.User;
-import team6.epicenergyspa.payload.NewUserDTO;
-import team6.epicenergyspa.payload.NewUserResponseDTO;
-import team6.epicenergyspa.payload.UserLoginDTO;
-import team6.epicenergyspa.payload.UserLoginResponseDTO;
+import team6.epicenergyspa.payload.user.NewUserDTO;
+import team6.epicenergyspa.payload.user.NewUserResponseDTO;
+import team6.epicenergyspa.payload.login.UserLoginDTO;
+import team6.epicenergyspa.payload.login.UserLoginResponseDTO;
 import team6.epicenergyspa.service.AuthService;
 
 @RestController

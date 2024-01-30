@@ -1,4 +1,4 @@
-package team6.epicenergyspa.payload;
+package team6.epicenergyspa.payload.mail;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

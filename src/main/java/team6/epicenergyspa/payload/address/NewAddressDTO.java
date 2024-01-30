@@ -1,4 +1,4 @@
-package team6.epicenergyspa.payload;
+package team6.epicenergyspa.payload.address;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
