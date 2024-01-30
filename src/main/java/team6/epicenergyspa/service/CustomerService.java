@@ -9,7 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import team6.epicenergyspa.exception.NotFoundException;
+import team6.epicenergyspa.exceptions.BadRequestException;
+import team6.epicenergyspa.exceptions.NotFoundException;
 import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;
 import team6.epicenergyspa.repository.CustomersDAO;
@@ -35,6 +36,10 @@ public class CustomerService {
     }
     //CREATE NEW CUSTOMER
     public Customer save( NewCustomerDTO body ){
+        // non penso si possa avere due custumers con lo stesso vat
+        if (customersDAO.existsByVatNumber(body.vatNumber())) {
+            throw new BadRequestException("Customer with the same vatNumer is already registered!");
+        }
         Customer customer = new Customer();
         customer.setCompanyName(body.companyName());
         customer.setVatNumber(body.vatNumber());
@@ -49,6 +54,7 @@ public class CustomerService {
         customer.setContactSurname(body.contactSurname());
         customer.setContactPhone(body.contactPhone());
         customer.setCompanyLogo(body.companyLogo());
+        //set default logo?
         return customersDAO.save(customer);
     }
     //DELETE A CUSTOMER
@@ -86,5 +92,12 @@ public class CustomerService {
         found.setCompanyLogo(url);
         customersDAO.save(found);
         return found;
+    }
+    public String uploadImageString( MultipartFile body) throws IOException {
+        String url = (String) cloudinaryUploader.uploader()
+                .upload(body.getBytes(), ObjectUtils.emptyMap()).get("url");
+                // save url a  db
+        return url;
+
     }
 }

@@ -45,11 +45,20 @@ public class CSVReader {
                 }
                 for (int cellindex = 0; cellindex < column + 1; cellindex++) {
                     System.out.println(worksheet.getCells().get(rwindex, cellindex).getValue() + ", ");
+                 /*
                     com.setCodiceProivincia((int) worksheet.getCells().get(rwindex, 0).getIntValue());
                     com.setCodiceProgressivoComune((String) worksheet.getCells().get(rwindex, 1).getStringValue());
                     com.setNameComune((String) worksheet.getCells().get(rwindex, 2).getStringValue());
                     com.setProvincia((String) worksheet.getCells().get(rwindex, 3).getStringValue());
+                     */
+                    com.setProvinceCode((int) worksheet.getCells().get(rwindex, 0).getIntValue());
+                    com.setProgressiveMunicipalityCode((String) worksheet.getCells().get(rwindex, 1).getStringValue());
+                    com.setMunicipalityName((String) worksheet.getCells().get(rwindex, 2).getStringValue());
+                    com.setProvince((String) worksheet.getCells().get(rwindex, 3).getStringValue());
                     municipalityList.add(com);
+
+
+
                 }
             }
         }
@@ -73,9 +82,14 @@ public class CSVReader {
                 }
                 for (int cellindex = 0; cellindex < column + 1; cellindex++) {
                     System.out.println(worksheet.getCells().get(rwindex, cellindex).getValue() + ", ");
-                    pro.setSiglaProvincia(worksheet.getCells().get(rwindex, 0).getStringValue());
-                    pro.setProvincia(worksheet.getCells().get(rwindex, 1).getStringValue());
-                    pro.setRegione(worksheet.getCells().get(rwindex, 2).getStringValue());
+             //       pro.setSiglaProvincia(worksheet.getCells().get(rwindex, 0).getStringValue());
+                      pro.setProvinceAbbreviation(worksheet.getCells().get(rwindex, 0).getStringValue());
+              //      pro.setProvincia(worksheet.getCells().get(rwindex, 1).getStringValue());
+                      pro.setProvince(worksheet.getCells().get(rwindex, 1).getStringValue());
+             //       pro.setRegione(worksheet.getCells().get(rwindex, 2).getStringValue());
+                      pro.setRegion(worksheet.getCells().get(rwindex, 1).getStringValue());
+
+
                     provinceList.add(pro);
                 }
             }
