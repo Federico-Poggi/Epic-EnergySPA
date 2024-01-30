@@ -21,16 +21,21 @@ public class Municipality {
     @Column(name = "province_code")
     private int provinceCode;
     @Column(name = "progressive_municipality_code")
-    private String progressiveMunicipalityCode;
+    private int progressiveMunicipalityCode;
     @Column(name = "municipality_name")
     private String municipalityName;
     @Column(name = "province")
-    private String province;
+    private String provinceName;
 
-    public Municipality ( int provinceCode, String progressiveMunicipalityCode, String municipalityName, String province) {
+    @ToString.Exclude
+    @ManyToOne (cascade = CascadeType.ALL, optional = false)
+    @JoinColumn (name = "province_id", nullable = false)
+    private Province province;
+
+    public Municipality(int provinceCode, int progressiveMunicipalityCode, String municipalityName, String provinceName) {
         this.provinceCode = provinceCode;
         this.progressiveMunicipalityCode = progressiveMunicipalityCode;
         this.municipalityName = municipalityName;
-        this.province = province;
+        this.provinceName = provinceName;
     }
 }

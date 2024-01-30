@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Configuration
 public class CloudinaryConfig {
-    @Bean
+@Bean
     public Cloudinary cloudinaryUploader(
             @Value("${cloudinary.name}") String name,
             @Value("${cloudinary.apikey}") String apikey,
