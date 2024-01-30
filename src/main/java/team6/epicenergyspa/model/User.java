@@ -1,41 +1,48 @@
 package team6.epicenergyspa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+
+@Entity
 @Getter
 @Setter
-@ToString
-@Entity
 @NoArgsConstructor
 @Table(name = "users")
+@JsonIgnoreProperties({"password", "authorities", "accountNonExpired", "enabled", "accountNonLocked", "credentialsNonExpired", "username"})
+
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
+    @GeneratedValue
     private long id;
-    private String email;
-    private String password;
     private String name;
     private String surname;
     private String username;
+    private String email;
+    private String password;
+    private String avatar;
+    @Enumerated(EnumType.STRING)
     private Role role;
-
-    public User(String email, String password, String name, String surname, String username, Role role) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.role = role;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
         return null;
     }
 
@@ -58,7 +65,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
-
-    // avatar
-
 }

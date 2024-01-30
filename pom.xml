@@ -138,8 +138,8 @@
             <artifactId>aspose-cells</artifactId>
             <version>24.1</version>
             <classifier>javadoc</classifier>
-
         </dependency>
+
 
     </dependencies>
 

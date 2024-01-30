@@ -1,6 +1,5 @@
 package team6.epicenergyspa.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team6.epicenergyspa.exceptions.NotFoundException;
@@ -10,29 +9,39 @@ import team6.epicenergyspa.repository.UserDAO;
 import java.util.List;
 
 @Service
-@Slf4j
 public class UserService {
+
     @Autowired
-    private UserDAO userDao;
+    private UserDAO userDAO;
 
-    public User findById(long userId) {
-        return userDao.findById(userId)
-                .orElseThrow(() -> new NotFoundException("User not found with ID: " + userId));
-    }
-    public User findByEmail(String email) {
-        return userDao.findByEmail(email)
-             .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
-    }
-    public List<User> getAllUsers() {
-        return userDao.findAll();
+    public List<User> getAllUsers(){
+        return userDAO.findAll();
     }
 
+    public User findById(long id) {
+        return userDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
+    }
 
-    // non so se conviene lasciarla l'update e la delate o se metterla nel auth service
-    public User updateUser(User user) {
-        return userDao.save(user);
+    public void findByIdAndDelete(long id) {
+        User found = this.findById(id);
+        userDAO.delete(found);
     }
-    public void deleteUser(long userId) {
-        userDao.deleteById(userId);
+
+    public User findByIdAndUpdate(long id, User body) {
+        User found = this.findById(id);
+        found.setSurname(body.getSurname());
+        found.setName(body.getName());
+        found.setEmail(body.getEmail());
+        found.setPassword(body.getPassword());
+        found.setAvatar(body.getAvatar());
+        found.setName(body.getName());
+        found.setRole(body.getRole());
+        return userDAO.save(found);
     }
+
+
+    public User findByEmail(String email) throws NotFoundException {
+        return userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente con email " + email + " non trovata!"));
+    }
+
 }
