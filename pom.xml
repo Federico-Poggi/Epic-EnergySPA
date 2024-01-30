@@ -14,13 +14,9 @@
     <repositories>
 
         <repository>
-
             <id>AsposeJavaAPI</id>
-
             <name>Aspose Java API</name>
-
             <url>https://releases.aspose.com/java/repo/</url>
-
         </repository>
 
     </repositories>
@@ -39,6 +35,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -51,7 +54,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>5.2.8.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -120,8 +127,8 @@
             <artifactId>aspose-cells</artifactId>
             <version>24.1</version>
             <classifier>javadoc</classifier>
-
         </dependency>
+
 
     </dependencies>
 
