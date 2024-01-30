@@ -29,16 +29,11 @@ public class RunnerDb implements CommandLineRunner {
         try {
            /* cs.readProvince("src/main/java/team6/epicenergyspa/exelfile/province-italiane" +
                                                               ".csv",provinceDAO);*/
-            cs.saveComuni(provinceDAO,municipalityDAO);
+            /*cs.saveComuni(provinceDAO,municipalityDAO);*/
+
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
-
-
-        /*List<Municipality> municipalityList = cs.readComuni(
-                "src/main/java/team6/epicenergyspa/exelfile/comuni-italiani.csv");
-        municipalityList.forEach(comuni -> municipalityDAO.save(comuni));
-        cs.saveComuni();*/
 
     }
 }
