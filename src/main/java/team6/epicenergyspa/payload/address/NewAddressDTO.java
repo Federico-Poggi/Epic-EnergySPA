@@ -8,7 +8,7 @@ public record NewAddressDTO(
 @NotEmpty(message = "La via è obbligatoria")
         @Size(min = 5,message = "la via deve avere minimo 5 caratteri")
     String via,
-@NotEmpty(message = "Il civico è obbligatoria")
+@NotEmpty(message = "Il civico è obbligatorio")
 @Size(min = 5,message = "Il civico  deve avere minimo 5 caratteri")
 String civico,
 @NotEmpty(message = "La località è obbligatoria")

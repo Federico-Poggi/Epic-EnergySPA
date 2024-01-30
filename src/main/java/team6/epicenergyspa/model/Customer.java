@@ -47,6 +47,6 @@ public class Customer {
     @Column(name="company_logo")
     private String companyLogo;
     @Column(name="addresses")
-    @OneToMany(mappedBy="costumer")
+    @OneToMany(mappedBy="customer")
     private List<Address> addresses;
 }

@@ -40,7 +40,7 @@ public class CustomerService {
     public Customer save( NewCustomerDTO body ){
         // non penso si possa avere due custumers con lo stesso vat
         if (customersDAO.existsByVatNumber(body.vatNumber())) {
-            throw new BadRequestException("Customer with the same vatNumer is already registered!");
+            throw new BadRequestException("Customer with the same vatNumber is already registered!");
         }
         Customer customer = new Customer();
         customer.setCompanyName(body.companyName());
@@ -57,7 +57,7 @@ public class CustomerService {
         customer.setContactSurname(body.contactSurname());
         customer.setContactPhone(body.contactPhone());
         customer.setCompanyLogo(body.companyLogo());
-        //set default logo?
+        customer.setAddresses();
         return customersDAO.save(customer);
     }
     //DELETE A CUSTOMER

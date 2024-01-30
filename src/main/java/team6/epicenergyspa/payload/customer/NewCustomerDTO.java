@@ -4,9 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import team6.epicenergyspa.model.Address;
 import team6.epicenergyspa.model.CustomerType;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record NewCustomerDTO(
         @NotEmpty(message="Company Name field can't be empty!")
@@ -36,6 +38,8 @@ public record NewCustomerDTO(
         @NotNull(message="Contact phone field can't be empty!")
         Long contactPhone,
         @NotEmpty(message="Company LOGO field can't be empty!")
-        String companyLogo
+        String companyLogo,
+        @NotNull(message="Address field can't be empty!")
+        List<Address> addresses
 ) {
 }

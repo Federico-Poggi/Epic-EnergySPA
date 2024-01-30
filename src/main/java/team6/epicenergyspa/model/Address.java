@@ -20,9 +20,9 @@ public class Address  {
     private String location;
     private int zipCode;
     //comune
-    // @ManyToOne
-    // @JoinColumn(name = "customer_id")
-    // private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Address(String street, String civic, String location, int zipCode) {
         this.street = street;
