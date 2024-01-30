@@ -2,11 +2,11 @@ package team6.epicenergyspa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team6.epicenergyspa.exceptions.NotFoundException;
+import team6.epicenergyspa.model.User;
 import team6.epicenergyspa.repository.UserDAO;
-import team6.epicenergyspa.entities.User;
-import team6.epicenergyspa.exception.NotFoundException;
+
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -18,16 +18,16 @@ public class UserService {
         return userDAO.findAll();
     }
 
-    public User findById(UUID id) {
+    public User findById(long id) {
         return userDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
-    public void findByIdAndDelete(UUID id) {
+    public void findByIdAndDelete(long id) {
         User found = this.findById(id);
         userDAO.delete(found);
     }
 
-    public User findByIdAndUpdate(UUID id, User body) {
+    public User findByIdAndUpdate(long id, User body) {
         User found = this.findById(id);
         found.setSurname(body.getSurname());
         found.setName(body.getName());
