@@ -32,7 +32,7 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
  //  @PreAuthorize("hasAuthority('ADMIN')")
-    public NewCustomerRespDTO saveCustumer ( @RequestBody @Validated NewCustomerDTO payload, BindingResult validation ) throws BadRequestException {
+    public NewCustomerRespDTO saveCustomer ( @RequestBody @Validated NewCustomerDTO payload, BindingResult validation ) throws BadRequestException {
         if (validation.hasErrors()) {
             throw new BadRequestException("Error with validation during saving event.");
         } else {
@@ -74,11 +74,11 @@ public class CustomerController {
     public List<Customer> getAllCustomersOrderedByLastContactDate() {
         return customerService.getAllCustomersOrderedByLastContactDate();
     }
-
+/*
     @GetMapping("/order-by-province")
     public List<Customer> getAllCustomersOrderedByProvince(String province) {
         return customerService.getAllCustomersOrderedByProvince(province);
-    }
+    }*/
 
     //FILTERING
     @GetMapping("/filter-by-turnover")

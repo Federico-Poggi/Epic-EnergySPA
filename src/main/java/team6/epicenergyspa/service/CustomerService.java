@@ -122,10 +122,10 @@ public class CustomerService {
         return customersDAO.findAllByOrderByLastContactDateAsc();
     }
 
-    public List<Customer> getAllCustomersOrderedByProvince(String province) {
+ /*  public List<Customer> getAllCustomersOrderedByProvince(String province) {
         return customersDAO.findAllByAddress_ProvinceOrderByProvinceNameAsc(province);
     }
-
+*/
     //FILTERING
     public List<Customer> getAllCustomersWithTurnoverEquals( LocalDate annualTurnover) {
         return customersDAO.findAllByAnnualTurnoverEquals(annualTurnover);

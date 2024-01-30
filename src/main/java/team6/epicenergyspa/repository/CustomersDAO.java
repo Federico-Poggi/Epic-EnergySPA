@@ -24,7 +24,7 @@ public interface CustomersDAO extends JpaRepository<Customer, Long> {
     List<Customer> findAllByOrderByLastContactDateAsc();
 
     // TO DO TOGETHER SEEING CSV
-    List<Customer> findAllByAddress_ProvinceOrderByProvinceNameAsc(String province);
+   // List<Customer> findAllByAddress_ProvinceOrderByProvinceNameAsc(String province);
 
     //FILTER
     List<Customer> findAllByAnnualTurnoverEquals( LocalDate annualTurnover);

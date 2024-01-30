@@ -42,4 +42,5 @@ public record NewCustomerDTO(
         @NotNull(message="Address field can't be empty!")
         List<Address> addresses
 ) {
+
 }
