@@ -57,7 +57,7 @@ public class CustomerService {
         customer.setContactSurname(body.contactSurname());
         customer.setContactPhone(body.contactPhone());
         customer.setCompanyLogo(body.companyLogo());
-        customer.setAddresses();
+        customer.setAddresses(body.addresses());
         return customersDAO.save(customer);
     }
     //DELETE A CUSTOMER
