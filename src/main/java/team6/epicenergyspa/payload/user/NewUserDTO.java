@@ -14,9 +14,8 @@ public record NewUserDTO(
         @NotEmpty(message = "Il cognome è obbligatorio")
         String surname,
         @NotEmpty(message = "Lo username è obbligatorio")
-        String username,
-        @NotNull(message= "il Ruolo è obbligatorio")
-        Role role
+        String username
+
 
 ) {
 }
