@@ -13,7 +13,7 @@ import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
 import team6.epicenergyspa.service.CustomerService;
 
 @RestController
-@RequestMapping("/customers)")
+@RequestMapping("/customers")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
