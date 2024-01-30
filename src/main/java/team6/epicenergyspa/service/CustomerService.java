@@ -16,6 +16,8 @@ import team6.epicenergyspa.payload.customer.NewCustomerDTO;
 import team6.epicenergyspa.repository.CustomersDAO;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -101,5 +103,43 @@ public class CustomerService {
                 // save url a  db
         return url;
 
+    }
+    //QUERIES
+    //ORDERING
+    public List<Customer> getAllCustomersOrderedByName() {
+        return customersDAO.findAllByOrderByCompanyNameAsc();
+    }
+
+    public List<Customer> getAllCustomersOrderedByAnnualTurnover() {
+        return customersDAO.findAllByOrderByAnnualTurnoverAsc();
+    }
+
+    public List<Customer> getAllCustomersOrderedByEnteringDate() {
+        return customersDAO.findAllByOrderByEnteringDateAsc();
+    }
+
+    public List<Customer> getAllCustomersOrderedByLastContactDate() {
+        return customersDAO.findAllByOrderByLastContactDateAsc();
+    }
+
+    public List<Customer> getAllCustomersOrderedByProvince(String province) {
+        return customersDAO.findAllByAddress_ProvinceOrderByProvinceNameAsc(province);
+    }
+
+    //FILTERING
+    public List<Customer> getAllCustomersWithTurnoverEquals( LocalDate annualTurnover) {
+        return customersDAO.findAllByAnnualTurnoverEquals(annualTurnover);
+    }
+
+    public List<Customer> getAllCustomersWithEnteringDateEquals(LocalDate enteringDate) {
+        return customersDAO.findAllByEnteringDateEquals(enteringDate);
+    }
+
+    public List<Customer> getAllCustomersWithLastContactDateEquals(LocalDate lastContactDate) {
+        return customersDAO.findAllByLastContactDateEquals(lastContactDate);
+    }
+
+    public List<Customer> getAllCustomersWithCompanyNameContaining(String companyName) {
+        return customersDAO.findAllByCompanyNameContaining(companyName);
     }
 }

@@ -1,6 +1,7 @@
 package team6.epicenergyspa.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,8 @@ import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
 import team6.epicenergyspa.service.CustomerService;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
@@ -50,4 +53,52 @@ public class CustomerController {
         return customerService.uploadImage(file, customerId);
 
     }
+    //FOR QUERIES
+    //ORDERING
+    @GetMapping("/order-by-name")
+    public List<Customer> getAllCustomersOrderedByName() {
+        return customerService.getAllCustomersOrderedByName();
+    }
+
+    @GetMapping("/order-by-annual-turnover")
+    public List<Customer> getAllCustomersOrderedByAnnualTurnover() {
+        return customerService.getAllCustomersOrderedByAnnualTurnover();
+    }
+
+    @GetMapping("/order-by-entering-date")
+    public List<Customer> getAllCustomersOrderedByEnteringDate() {
+        return customerService.getAllCustomersOrderedByEnteringDate();
+    }
+
+    @GetMapping("/order-by-last-contact-date")
+    public List<Customer> getAllCustomersOrderedByLastContactDate() {
+        return customerService.getAllCustomersOrderedByLastContactDate();
+    }
+
+    @GetMapping("/order-by-province")
+    public List<Customer> getAllCustomersOrderedByProvince(String province) {
+        return customerService.getAllCustomersOrderedByProvince(province);
+    }
+
+    //FILTERING
+    @GetMapping("/filter-by-turnover")
+    public List<Customer> getAllCustomersWithTurnoverEquals(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate annualTurnover) {
+        return customerService.getAllCustomersWithTurnoverEquals(annualTurnover);
+    }
+
+    @GetMapping("/filter-by-entering-date")
+    public List<Customer> getAllCustomersWithEnteringDateEquals(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enteringDate) {
+        return customerService.getAllCustomersWithEnteringDateEquals(enteringDate);
+    }
+
+    @GetMapping("/filter-by-last-contact-date")
+    public List<Customer> getAllCustomersWithLastContactDateGreaterThanEqual(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastContactDate) {
+        return customerService.getAllCustomersWithLastContactDateEquals(lastContactDate);
+    }
+
+    @GetMapping("/filter-by-name")
+    public List<Customer> getAllCustomersWithCompanyNameContaining(@RequestParam String partOfCompanyName) {
+        return customerService.getAllCustomersWithCompanyNameContaining(partOfCompanyName);
+    }
 }
+

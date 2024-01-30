@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="customers")
@@ -45,5 +46,7 @@ public class Customer {
     private long contactPhone;
     @Column(name="company_logo")
     private String companyLogo;
-
+    @Column(name="addresses")
+    @OneToMany(mappedBy="costumer")
+    private List<Address> addresses;
 }
