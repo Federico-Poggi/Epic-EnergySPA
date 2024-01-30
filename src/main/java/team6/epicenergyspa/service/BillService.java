@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team6.epicenergyspa.exceptions.NotFoundException;
 import team6.epicenergyspa.model.Bill;
-import team6.epicenergyspa.repositories.BillsDAO;
+import team6.epicenergyspa.repository.BillsDAO;
 
 @Service
 public class BillService {

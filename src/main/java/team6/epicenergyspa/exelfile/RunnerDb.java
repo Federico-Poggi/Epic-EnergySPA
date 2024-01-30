@@ -22,12 +22,12 @@ public class RunnerDb implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        CSVReader cs=new CSVReader();
-        List<Province> province= cs.readProvince("src/main/java/team6/epicenergyspa/Exelfile/province-italiane.xlsx");
-        /*province.stream().forEach(province1 -> provinciaDAO.save(province1));*/
+public void run(String... args) throws Exception {
+    CSVReader cs = new CSVReader();
+    List<Province> province = cs.readProvince("src/main/java/team6/epicenergyspa/Exelfile/province-italiane.xlsx");
+    province.forEach(province1 -> provinceDAO.save(province1));
 
-        List<Municipality> municipalityList =cs.readComuni("src/main/java/team6/epicenergyspa/Exelfile/comuni-italiani.xlsx");
-        /*comuniList.forEach(comuni -> comuniDAO.save(comuni));*/
-    }
+    List<Municipality> municipalityList = cs.readComuni("src/main/java/team6/epicenergyspa/Exelfile/comuni-italiani.xlsx");
+    municipalityList.forEach(comuni -> municipalityDAO.save(comuni));
+}
 }

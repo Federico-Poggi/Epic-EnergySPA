@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team6.epicenergyspa.exceptions.NotFoundException;
 import team6.epicenergyspa.model.User;
-import team6.epicenergyspa.repositories.UserDAO;
+import team6.epicenergyspa.repository.UserDAO;
 
 import java.util.List;
 
@@ -19,7 +19,6 @@ public class UserService {
         return userDao.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found with ID: " + userId));
     }
- //find by email
     public User findByEmail(String email) {
         return userDao.findByEmail(email)
              .orElseThrow(() -> new NotFoundException("User not found with email: " + email));

@@ -1,4 +1,4 @@
-package team6.epicenergyspa.controller;
+package team6.epicenergyspa.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -6,7 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import team6.epicenergyspa.exception.BadRequestException;
+import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;
 import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
@@ -26,7 +26,7 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public NewCustomerRespDTO saveEvent ( @RequestBody @Validated NewCustomerDTO payload, BindingResult validation ) throws  BadRequestException {
+    public NewCustomerRespDTO saveEvent ( @RequestBody @Validated NewCustomerDTO payload, BindingResult validation ) throws BadRequestException {
         if (validation.hasErrors()) {
             throw new BadRequestException("Error with validation during saving event.");
         } else {

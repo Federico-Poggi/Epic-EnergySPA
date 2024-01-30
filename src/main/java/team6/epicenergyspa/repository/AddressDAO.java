@@ -1,4 +1,4 @@
-package team6.epicenergyspa.repositories;
+package team6.epicenergyspa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class CloudinaryConfig {
+public class CloudinaryConfig {/*
     @Bean
     public Cloudinary cloudinaryUploader(
             @Value("${cloudinary.name}") String name,
@@ -22,4 +22,5 @@ public class CloudinaryConfig {
         config.put("api_secret", secret);
         return new Cloudinary(config);
     }
+    */
 }

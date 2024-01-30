@@ -1,15 +1,15 @@
 package team6.epicenergyspa.service;
 
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.exceptions.UnauthorizedException;
 import team6.epicenergyspa.model.Role;
 import team6.epicenergyspa.model.User;
 import team6.epicenergyspa.payload.NewUserDTO;
 import team6.epicenergyspa.payload.UserLoginDTO;
-import team6.epicenergyspa.repositories.UserDAO;
+import team6.epicenergyspa.repository.UserDAO;
 import team6.epicenergyspa.security.JWTTools;
 
 @Service
@@ -33,9 +33,9 @@ public class AuthService {
     }
 
     public User save(NewUserDTO body) {
-       // usersDAO.findByEmail(body.email()).ifPresent(user -> {
-       //     throw new BadRequestException("L'email " + user.getEmail() + " è già in uso!");
-       // });
+        usersDAO.findByEmail(body.email()).ifPresent(user -> {
+            throw new BadRequestException("L'email " + user.getEmail() + " è già in uso!");
+        });
         User newUser = new User();
         newUser.setSurname(body.surname());
         newUser.setName(body.name());

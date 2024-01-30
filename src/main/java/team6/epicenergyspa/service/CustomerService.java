@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import team6.epicenergyspa.exception.NotFoundException;
+import team6.epicenergyspa.exceptions.NotFoundException;
 import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;
 import team6.epicenergyspa.repository.CustomersDAO;
