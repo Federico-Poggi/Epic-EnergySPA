@@ -1,4 +1,4 @@
-package team6.epicenergyspa.payload;
+package team6.epicenergyspa.payload.user;
 
 public record NewUserResponseDTO(long id) {
 }

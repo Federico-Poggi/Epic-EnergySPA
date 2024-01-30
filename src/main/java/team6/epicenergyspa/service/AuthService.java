@@ -7,8 +7,8 @@ import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.exceptions.UnauthorizedException;
 import team6.epicenergyspa.model.Role;
 import team6.epicenergyspa.model.User;
-import team6.epicenergyspa.payload.NewUserDTO;
-import team6.epicenergyspa.payload.UserLoginDTO;
+import team6.epicenergyspa.payload.user.NewUserDTO;
+import team6.epicenergyspa.payload.login.UserLoginDTO;
 import team6.epicenergyspa.repository.UserDAO;
 import team6.epicenergyspa.security.JWTTools;
 

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import team6.epicenergyspa.payload.MailPayloadDTO;
+import team6.epicenergyspa.payload.mail.MailPayloadDTO;
 
 @Service
 @NoArgsConstructor
