@@ -109,6 +109,12 @@
             <artifactId>mailgun-java</artifactId>
             <version>1.1.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44 -->
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.37.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.aspose.cells/aspose-cells-jdk16 -->
         <dependency>
             <groupId>com.aspose</groupId>
@@ -121,6 +127,7 @@
             <artifactId>aspose-cells</artifactId>
             <version>24.1</version>
             <classifier>javadoc</classifier>
+
         </dependency>
 
     </dependencies>
