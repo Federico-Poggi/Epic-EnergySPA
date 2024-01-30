@@ -42,6 +42,7 @@ public class CustomerService {
         }
         Customer customer = new Customer();
         customer.setCompanyName(body.companyName());
+        customer.setCustomerType(body.customerType());
         customer.setVatNumber(body.vatNumber());
         customer.setEmail(body.email());
         customer.setEnteringDate(body.enteringDate());
@@ -66,6 +67,7 @@ public class CustomerService {
     public Customer FindByIdAndUpdateCustomer(long id,Customer body){
         Customer found= this.findById(id);
         found.setCompanyName(body.getCompanyName());
+        found.setCustomerType(body.getCustomerType());
         found.setVatNumber(body.getVatNumber());
         found.setEmail(body.getEmail());
         found.setEnteringDate(body.getEnteringDate());

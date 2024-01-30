@@ -46,8 +46,8 @@ public class CustomerController {
 
     //endpoint che accetta immagini con payload NON JSON!!!  MA MULTIPLATFORM DATA , ritorna una stringa
     @PostMapping("/upload")
-    public String uploadImageString(@RequestParam("avatar") MultipartFile file,@PathVariable long customerId) throws IOException {
-        return customerService.uploadImageString(file);
+    public Customer uploadImage(@RequestParam("avatar") MultipartFile file,@PathVariable long customerId) throws IOException {
+        return customerService.uploadImage(file, customerId);
 
     }
 }

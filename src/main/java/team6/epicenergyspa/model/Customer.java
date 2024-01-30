@@ -1,10 +1,7 @@
 package team6.epicenergyspa.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -13,6 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +18,9 @@ public class Customer {
     private long id;
     @Column(name="company_name")
     private String companyName;
+    @Column(name="customer_type")
+    @Enumerated(EnumType.STRING)
+    private CustomerType customerType;
     @Column(name="vat_number")
     private long vatNumber;
     @Column(name="email")
