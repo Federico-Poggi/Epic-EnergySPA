@@ -27,10 +27,10 @@ public class RunnerDb implements CommandLineRunner {
 
         CSVReaderDB cs = new CSVReaderDB();
         try {
-           /* cs.readProvince("src/main/java/team6/epicenergyspa/exelfile/province-italiane" +
-                                                              ".csv",provinceDAO);*/
-            /*cs.saveComuni(provinceDAO,municipalityDAO);*/
-
+         /*  cs.readProvince("src/main/java/team6/epicenergyspa/exelfile/province-italiane" +
+                                                              ".csv",provinceDAO);
+            cs.saveComuni(provinceDAO,municipalityDAO);
+*/
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

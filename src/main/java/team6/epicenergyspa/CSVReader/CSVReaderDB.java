@@ -124,6 +124,5 @@ public class CSVReaderDB {
             System.out.println(data[0] + " " + data[1] + " " + data[2]);
             pr.save(p);
         }
-
     }
 }

@@ -12,6 +12,8 @@ import team6.epicenergyspa.payload.login.UserLoginDTO;
 import team6.epicenergyspa.repository.UserDAO;
 import team6.epicenergyspa.security.JWTTools;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
     @Autowired
@@ -24,6 +26,7 @@ public class AuthService {
     private JWTTools jwtTools;
 
     public String authenticateUser(UserLoginDTO body) {
+        System.out.println(body.email() + body.password());
         User user = usersService.findByEmail(body.email());
         if (bcrypt.matches(body.password(), user.getPassword())) {
             return jwtTools.createToken(user);
@@ -32,16 +35,25 @@ public class AuthService {
         }
     }
 
-    public User save(NewUserDTO body) {
-        usersDAO.findByEmail(body.email()).ifPresent(user -> {
-            throw new BadRequestException("L'email " + user.getEmail() + " è già in uso!");
-        });
-        User newUser = new User();
-        newUser.setSurname(body.surname());
-        newUser.setName(body.name());
-        newUser.setEmail(body.email());
-        newUser.setPassword(bcrypt.encode(body.password()));
-        newUser.setRole(Role.ADMIN);
-        return usersDAO.save(newUser);
+    public User save(NewUserDTO body) throws BadRequestException {
+        try {
+            Optional<User> found = usersDAO.findByEmail(body.email());
+            if (!found.isPresent()) {
+                User newUser = new User();
+                newUser.setSurname(body.surname());
+                newUser.setName(body.name());
+                newUser.setEmail(body.email());
+                newUser.setUsername(body.username());
+                newUser.setPassword(bcrypt.encode(body.password()));
+                newUser.setRole(Role.ADMIN);
+                return usersDAO.save(newUser);
+            } else {
+                throw new BadRequestException("L'email " + body.email() + " è già in uso!");
+            }
+        }
+        catch (RuntimeException e) {
+            throw new BadRequestException("L'email " + body.email() + " è già in uso!");
+        }
+
     }
 }

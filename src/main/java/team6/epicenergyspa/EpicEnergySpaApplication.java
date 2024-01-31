@@ -9,10 +9,7 @@ import team6.epicenergyspa.mailsender.EmailService;
 @SpringBootApplication
 public class EpicEnergySpaApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(EpicEnergySpaApplication.class, args);
-
     }
-
 }
