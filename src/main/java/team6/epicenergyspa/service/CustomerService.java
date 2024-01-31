@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.exceptions.NotFoundException;
+
 import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.model.CustomerType;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;

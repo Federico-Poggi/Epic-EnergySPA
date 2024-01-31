@@ -4,12 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import team6.epicenergyspa.CSVReader.CSVReaderDB;
-import team6.epicenergyspa.model.Municipality;
-import team6.epicenergyspa.model.Province;
 import team6.epicenergyspa.repository.MunicipalityDAO;
 import team6.epicenergyspa.repository.ProvinceDAO;
-
-import java.util.List;
 
 @Component
 public class RunnerDb implements CommandLineRunner {
@@ -27,10 +23,8 @@ public class RunnerDb implements CommandLineRunner {
 
         CSVReaderDB cs = new CSVReaderDB();
         try {
-         /*  cs.readProvince("src/main/java/team6/epicenergyspa/exelfile/province-italiane" +
-                                                              ".csv",provinceDAO);
-            cs.saveComuni(provinceDAO,municipalityDAO);
-*/
+           /* cs.readProvince("src/main/java/team6/epicenergyspa/exelfile/province-italiane" + ".csv", provinceDAO);
+            cs.saveComuni(provinceDAO, municipalityDAO);*/
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
