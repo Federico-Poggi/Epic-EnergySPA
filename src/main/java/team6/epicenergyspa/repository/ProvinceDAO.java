@@ -7,4 +7,5 @@ import team6.epicenergyspa.model.Province;
 @Repository
 public interface ProvinceDAO extends JpaRepository<Province,Long> {
     Province getProvincesByProvince(String provinceName);
+    Province getProvincesByProvinceAbbreviation(String abbrevation);
 }

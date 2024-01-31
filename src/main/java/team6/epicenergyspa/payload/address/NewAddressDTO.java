@@ -13,6 +13,10 @@ public record NewAddressDTO(@NotEmpty(message = "La via è obbligatoria") @Size(
                                     + "avere minimo 5 caratteri") String civico,
                             @NotEmpty(message = "La località è obbligatoria") @Size(min = 5, message =
                                     "La località " + "deve " + "avere" + " minimo 5 " + "caratteri") String localita,
+
+                            @NotEmpty(message = "Il comune bisogna inserirlo")
+                            String comune,
+
                             @NotNull(message = "IL cap è obbligatoria") @Size(min = 5, max = 5, message =
                                     "Il cap " + "dev'essere di 5 " + "cifre") int cap
 
