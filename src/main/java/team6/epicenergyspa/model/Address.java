@@ -24,6 +24,8 @@ public class Address  {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @OneToOne
+    Municipality municipality;
     public Address(String street, String civic, String location, int zipCode) {
         this.street = street;
         this.civic = civic;

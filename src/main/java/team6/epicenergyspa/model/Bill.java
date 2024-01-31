@@ -23,9 +23,9 @@ public class Bill {
     @Enumerated(EnumType.STRING)
     private BillStatus billStatus;
 
-    // @ManyToOne
-    // @JoinColumn(name = "customer_id")
-    // private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Bill(LocalDate date, double amount, long billNumber, BillStatus billStatus) {
         this.date = date;

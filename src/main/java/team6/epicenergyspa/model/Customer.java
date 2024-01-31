@@ -50,4 +50,6 @@ public class Customer {
     @Column(name="address")
     @OneToMany(mappedBy="customer")
     private List<Address> addresses = new ArrayList<>();
+    @OneToMany(mappedBy = "customer")
+    private List<Bill> bills=new ArrayList<>();
 }
