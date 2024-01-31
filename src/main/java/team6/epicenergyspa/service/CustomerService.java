@@ -8,11 +8,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.exceptions.NotFoundException;
 import team6.epicenergyspa.model.Customer;
+import team6.epicenergyspa.model.CustomerType;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;
+import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
 import team6.epicenergyspa.repository.CustomersDAO;
 
 import java.io.IOException;
@@ -37,14 +40,16 @@ public class CustomerService {
         return customersDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
     //CREATE NEW CUSTOMER
-    public Customer save( NewCustomerDTO body ){
-        // non penso si possa avere due custumers con lo stesso vat
+    public NewCustomerRespDTO save(NewCustomerDTO body, BindingResult bd){
+        if(bd.hasErrors()){
+            throw new BadRequestException("Controlla i campi inseriti");
+        }
         if (customersDAO.existsByVatNumber(body.vatNumber())) {
             throw new BadRequestException("Customer with the same vatNumber is already registered!");
         }
         Customer customer = new Customer();
         customer.setCompanyName(body.companyName());
-        customer.setCustomerType(body.customerType());
+        customer.setCustomerType(CustomerType.valueOf(body.customerType()));
         customer.setVatNumber(body.vatNumber());
         customer.setEmail(body.email());
         customer.setEnteringDate(body.enteringDate());
@@ -58,7 +63,8 @@ public class CustomerService {
         customer.setContactPhone(body.contactPhone());
         customer.setCompanyLogo(body.companyLogo());
         customer.setAddresses(body.addresses());
-        return customersDAO.save(customer);
+        customersDAO.save(customer);
+        return new NewCustomerRespDTO(customer.getId());
     }
     //DELETE A CUSTOMER
     public void FindByIdAndDeleteCustomer(long id){

@@ -2,8 +2,13 @@ package team6.epicenergyspa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.exceptions.NotFoundException;
+import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.model.User;
+import team6.epicenergyspa.payload.customer.NewCustomerDTO;
+import team6.epicenergyspa.repository.CustomersDAO;
 import team6.epicenergyspa.repository.UserDAO;
 
 import java.util.List;
@@ -13,6 +18,8 @@ public class UserService {
 
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private CustomersDAO customersDAO;
 
     public List<User> getAllUsers(){
         return userDAO.findAll();
@@ -43,5 +50,6 @@ public class UserService {
     public User findByEmail(String email) throws NotFoundException {
         return userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente con email " + email + " non trovata!"));
     }
+
 
 }

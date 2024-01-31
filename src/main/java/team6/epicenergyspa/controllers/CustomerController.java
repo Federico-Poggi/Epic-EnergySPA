@@ -31,13 +31,13 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
- //  @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public NewCustomerRespDTO saveCustomer ( @RequestBody @Validated NewCustomerDTO payload, BindingResult validation ) throws BadRequestException {
         if (validation.hasErrors()) {
-            throw new BadRequestException("Error with validation during saving event.");
+            throw new BadRequestException("Errori nella validazione"+ validation.getAllErrors());
         } else {
-            Customer newCustomer = customerService.save(payload);
-            return new NewCustomerRespDTO(newCustomer.getId());
+         //   Customer newCustomer = customerService.save(payload,validation);
+            return customerService.save(payload, validation);
         }
     }
 

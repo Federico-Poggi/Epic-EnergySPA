@@ -1,7 +1,5 @@
 package team6.epicenergyspa.payload.customer;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import team6.epicenergyspa.model.Address;
@@ -14,7 +12,7 @@ public record NewCustomerDTO(
         @NotEmpty(message="Company Name field can't be empty!")
         String companyName,
         @NotEmpty(message="Customer type field can't be empty!")
-        CustomerType customerType,
+        String customerType,
         @NotNull(message="VAT Number field can't be empty!")
         Long vatNumber,
         @NotEmpty(message="Email field can't be empty!")

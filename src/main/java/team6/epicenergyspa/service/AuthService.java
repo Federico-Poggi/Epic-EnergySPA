@@ -45,6 +45,7 @@ public class AuthService {
                 newUser.setEmail(body.email());
                 newUser.setUsername(body.username());
                 newUser.setPassword(bcrypt.encode(body.password()));
+                //da cambiare prossimamente in Role.USER
                 newUser.setRole(Role.ADMIN);
                 return usersDAO.save(newUser);
             } else {

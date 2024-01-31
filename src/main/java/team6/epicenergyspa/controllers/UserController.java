@@ -2,8 +2,15 @@ package team6.epicenergyspa.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.model.User;
+import team6.epicenergyspa.payload.customer.NewCustomerDTO;
+import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
+import team6.epicenergyspa.payload.user.NewUserDTO;
+import team6.epicenergyspa.service.CustomerService;
 import team6.epicenergyspa.service.UserService;
 
 import java.util.List;
@@ -14,6 +21,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CustomerService customerService;
 
     @GetMapping
     public List<User> getUsers(){
@@ -37,5 +46,11 @@ public class UserController {
     public void getUserByIdAndDelete(@PathVariable long userId) {
         userService.findByIdAndDelete(userId);
     }
+
+/*    @PostMapping("/postCustomer")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public NewCustomerRespDTO saveUser(@RequestBody @Validated NewCustomerDTO newCustomerDTO, BindingResult bindingResult) throws BadRequestException {
+        return customerService.save(newCustomerDTO, bindingResult);
+    }*/
 
 }
