@@ -110,5 +110,12 @@ public class CustomerController {
     public List<Customer> getAllCustomersWithCompanyNameContaining(@RequestParam String partOfCompanyName) {
         return customerService.getAllCustomersWithCompanyNameContaining(partOfCompanyName);
     }
+
+    @DeleteMapping("/{customerId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteCustomer(@PathVariable long customerId) {
+        customerService.FindByIdAndDeleteCustomer(customerId);
+    }
 }
 

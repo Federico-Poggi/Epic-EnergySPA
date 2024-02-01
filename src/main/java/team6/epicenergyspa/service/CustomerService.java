@@ -13,12 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.exceptions.NotFoundException;
 import team6.epicenergyspa.model.Address;
+import team6.epicenergyspa.model.Bill;
 import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.model.CustomerType;
 import team6.epicenergyspa.payload.address.NewAddressDTO;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;
 import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
 import team6.epicenergyspa.repository.AddressDAO;
+import team6.epicenergyspa.repository.BillsDAO;
 import team6.epicenergyspa.repository.CustomersDAO;
 import team6.epicenergyspa.repository.MunicipalityDAO;
 
@@ -43,6 +45,9 @@ public class CustomerService {
 
     @Autowired
     AddressDAO addressDAO;
+
+    @Autowired
+    BillsDAO billsDAO;
 
     //FIND ALL CUSTOMERS
     public Page<Customer> getCustomers(int page, int size, String orderBy) {
@@ -104,8 +109,31 @@ public class CustomerService {
 
     //DELETE A CUSTOMER
     public void FindByIdAndDeleteCustomer(long id) {
-        Customer found = this.findById(id);
-        customersDAO.delete(found);
+
+        Customer customer = this.findById(id);
+
+        if (!customer.getAddresses().isEmpty()) {
+
+            List<Address> addressList = customer.getAddresses();
+
+            addressList.forEach(address -> {
+                address.setCustomer(null);
+                addressDAO.save(address);
+            });
+        }
+
+        if (!customer.getBills().isEmpty()) {
+
+            List<Bill> billList = customer.getBills();
+
+            billList.forEach(bill -> {
+                bill.setCustomer(null);
+                billsDAO.save(bill);
+            });
+
+        }
+
+        customersDAO.delete(customer);
     }
 
     //UPDATE A CUSTOMER
