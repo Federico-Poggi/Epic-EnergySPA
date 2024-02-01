@@ -118,4 +118,9 @@ public class BillService {
         return new NewStatusDTO(bill.getBillStatus()
                                     .name());
     }
+
+    public void deleteBill(long idFattura) {
+        Bill bill = billsDAO.findById(idFattura).orElseThrow(() -> new NotFoundException("Fattura con id " + idFattura + " non trovata nel database"));
+        billsDAO.delete(bill);
+    }
 }
