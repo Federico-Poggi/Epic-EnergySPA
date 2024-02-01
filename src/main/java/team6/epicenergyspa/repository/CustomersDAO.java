@@ -26,8 +26,6 @@ public interface CustomersDAO extends JpaRepository<Customer, Long> {
 
     List<Customer> findAllByOrderByLastContactDateAsc();
 
-    @Query("SELECT c FROM Customer c WHERE c.enteringDate >= :dataInserimento")
-    Page<Customer> orderByDateAscendent(LocalDate dataInserimento);
 
 }
 
