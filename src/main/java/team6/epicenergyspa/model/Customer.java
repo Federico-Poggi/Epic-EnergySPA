@@ -71,5 +71,6 @@ public class Customer {
     private List<Address> addresses = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
     private List<Bill> bills = new ArrayList<>();
 }

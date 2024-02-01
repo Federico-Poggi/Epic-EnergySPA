@@ -1,5 +1,6 @@
 package team6.epicenergyspa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,14 +18,19 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private long id;
+
     private LocalDate date;
+
     private double amount;
+
     private long billNumber;
+
     @Enumerated(EnumType.STRING)
     private BillStatus billStatus;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonBackReference
     private Customer customer;
 
     public Bill(LocalDate date, double amount, long billNumber, BillStatus billStatus) {
