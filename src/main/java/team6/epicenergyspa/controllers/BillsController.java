@@ -74,4 +74,12 @@ public class BillsController {
         return billService.statusUpdate(idFattura);
     }
 
+    @DeleteMapping("/{idFattura}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteBill(@PathVariable long idFattura) {
+        billService.deleteBill(idFattura);
+    }
+
+
 }

@@ -41,19 +41,19 @@ public class CustomerController {
         if (validation.hasErrors()) {
             throw new BadRequestException("Errori nella validazione" + validation.getAllErrors());
         } else {
-            //   Customer newCustomer = customerService.save(payload,validation);
+            // Customer newCustomer = customerService.save(payload,validation);
             return customerService.save(payload);
         }
     }
 
     @PutMapping("/{id}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    // @PreAuthorize("hasAuthority('ADMIN')")
     public Customer findByIdAndUpdate(@PathVariable long id, @RequestBody Customer body) {
         return this.customerService.FindByIdAndUpdateCustomer(id, body);
     }
 
-    //endpoint che accetta immagini con payload NON JSON!!!  MA MULTIPLATFORM DATA , ritorna una stringa
-
+    // endpoint che accetta immagini con payload NON JSON!!! MA MULTIPLATFORM DATA ,
+    // ritorna una stringa
 
     @PostMapping("/upload")
     public Customer uploadImage(@RequestParam("avatar") MultipartFile file, @PathVariable long customerId)
@@ -65,49 +65,44 @@ public class CustomerController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<Customer> getCustomer(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "5") int size,
-                                      @RequestParam(defaultValue = "id") String sortedBy) {
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortedBy) {
         return customerService.getCustomers(page, size, sortedBy);
     }
 
-    //FOR QUERIES
-    //ORDERING
+    // FOR QUERIES
+    // ORDERING
 
-    //Bisogna farsi inserire dal frontend il parametro che puo essere numero o stringa o data
-   /* @GetMapping("/filter")
-    @ResponseStatus(HttpStatus.FOUND)
-    public Page<Customer> filteredBy(@RequestParam(defaultValue = "0") int page,
-                                     @RequestParam(defaultValue = "5") int size,
-                                     @RequestParam(defaultValue = "id") String sortedBy,
-                                     @RequestParam(required = true) String filteredBy,
-                                    @RequestParam(required = false) Double annualTurnover) {
-       *//* if(annualTurnover!=null){
-            return customerService.filterByTurnover(annualTurnover,page,size,sortedBy);
-        }else{
+    // Bisogna farsi inserire dal frontend il parametro che puo essere numero o
+    // stringa o data
+    /*
+     * @GetMapping("/filter")
+     * 
+     * @ResponseStatus(HttpStatus.FOUND)
+     * public Page<Customer> filteredBy(@RequestParam(defaultValue = "0") int page,
+     * 
+     * @RequestParam(defaultValue = "5") int size,
+     * 
+     * @RequestParam(defaultValue = "id") String sortedBy,
+     * 
+     * @RequestParam(required = true) String filteredBy,
+     * 
+     * @RequestParam(required = false) Double annualTurnover) {
+     *//*
+        * if(annualTurnover!=null){
+        * return customerService.filterByTurnover(annualTurnover,page,size,sortedBy);
+        * }else{
+        * 
+        * }
+        *//*
+           * }
+           */
 
-        }*//*
-    }*/
-
-
-    @GetMapping("/order-by-name")
-    public List<Customer> getAllCustomersOrderedByName() {
-        return customerService.getAllCustomersOrderedByName();
-    }
-
-    @GetMapping("/order-by-annual-turnover")
-    public List<Customer> getAllCustomersOrderedByAnnualTurnover() {
-        return customerService.getAllCustomersOrderedByAnnualTurnover();
-    }
-
-    @GetMapping("/order-by-entering-date")
-    public List<Customer> getAllCustomersOrderedByEnteringDate() {
-        return customerService.getAllCustomersOrderedByEnteringDate();
-    }
-
-    @GetMapping("/order-by-last-contact-date")
-    public List<Customer> getAllCustomersOrderedByLastContactDate() {
-        return customerService.getAllCustomersOrderedByLastContactDate();
+    @DeleteMapping("/{customerId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteCustomer(@PathVariable long customerId) {
+        customerService.FindByIdAndDeleteCustomer(customerId);
     }
 
 }
-
