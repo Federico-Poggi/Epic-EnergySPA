@@ -1,6 +1,8 @@
 package team6.epicenergyspa.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.model.User;
@@ -23,7 +25,9 @@ public interface CustomersDAO extends JpaRepository<Customer, Long> {
     List<Customer> findAllByOrderByEnteringDateAsc();
 
     List<Customer> findAllByOrderByLastContactDateAsc();
-    
+
+    @Query("SELECT c FROM Customer c WHERE c.enteringDate >= :dataInserimento")
+    Page<Customer> orderByDateAscendent(LocalDate dataInserimento);
 
 }
 

@@ -1,5 +1,7 @@
 package team6.epicenergyspa.controllers;
 
+import aj.org.objectweb.asm.Type;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -70,6 +72,23 @@ public class CustomerController {
 
     //FOR QUERIES
     //ORDERING
+
+    //Bisogna farsi inserire dal frontend il parametro che puo essere numero o stringa o data
+   /* @GetMapping("/filter")
+    @ResponseStatus(HttpStatus.FOUND)
+    public Page<Customer> filteredBy(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "5") int size,
+                                     @RequestParam(defaultValue = "id") String sortedBy,
+                                     @RequestParam(required = true) String filteredBy,
+                                    @RequestParam(required = false) Double annualTurnover) {
+       *//* if(annualTurnover!=null){
+            return customerService.filterByTurnover(annualTurnover,page,size,sortedBy);
+        }else{
+
+        }*//*
+    }*/
+
+
     @GetMapping("/order-by-name")
     public List<Customer> getAllCustomersOrderedByName() {
         return customerService.getAllCustomersOrderedByName();

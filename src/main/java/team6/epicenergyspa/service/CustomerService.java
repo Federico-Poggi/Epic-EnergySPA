@@ -54,6 +54,10 @@ public class CustomerService {
                            .orElseThrow(() -> new NotFoundException(id));
     }
 
+   /* public Page<Customer> filterBy() {
+
+    }*/
+
     //CREATE NEW CUSTOMER
     public NewCustomerRespDTO save(NewCustomerDTO body) {
 
@@ -168,5 +172,5 @@ public class CustomerService {
     public List<Customer> getAllCustomersOrderedByLastContactDate() {
         return customersDAO.findAllByOrderByLastContactDateAsc();
     }
-    
+
 }
