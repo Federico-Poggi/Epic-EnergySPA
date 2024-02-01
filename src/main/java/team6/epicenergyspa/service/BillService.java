@@ -41,7 +41,12 @@ public class BillService {
 
     public Page<Bill> getByCompanyName(Long id, int page, int size, String sortedBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortedBy));
-        return billsDAO.findAllByCustomer_Id(id, pageable);
+        Page<Bill> pageBill = billsDAO.findAllByCustomer_Id(id, pageable);
+        if (pageBill.isEmpty()) {
+            throw new NotFoundException("Non sono presenti fatture con l'id inserito");
+        } else {
+            return pageBill;
+        }
     }
 
     public NewBillResponseDTO saveFattura(NewBillDTO bill, Long idCustomer) {
@@ -63,25 +68,45 @@ public class BillService {
 
     public Page<Bill> getByState(String state, int page, int size, String sortedBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortedBy));
-        return billsDAO.findAllByBillStatus(BillStatus.valueOf(state), pageable);
+        Page<Bill> pageBill = billsDAO.findAllByBillStatus(BillStatus.valueOf(state), pageable);
+        if (pageBill.isEmpty()) {
+            throw new NotFoundException("Non sono presenti fatture con lo stato inserito");
+        } else {
+            return pageBill;
+        }
     }
 
 
     public Page<Bill> getByDate(LocalDate date, int page, int size, String sortedBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortedBy));
-        return billsDAO.findAllByDate(date, pageable);
+        Page<Bill> pageBill = billsDAO.findAllByDate(date, pageable);
+        if (pageBill.isEmpty()) {
+            throw new NotFoundException("Non sono presenti fatture con la data inserita");
+        } else {
+            return pageBill;
+        }
     }
 
 
     public Page<Bill> getByYear(int year, int page, int size, String sortedBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortedBy));
-        return billsDAO.findAllByDateYear(year, pageable);
+        Page<Bill> pageBill = billsDAO.findAllByDateYear(year, pageable);
+        if (pageBill.isEmpty()) {
+            throw new NotFoundException("Non sono presenti fatture con l'anno inserito");
+        } else {
+            return pageBill;
+        }
     }
 
 
     public Page<Bill> getByImporto(Double importo, int page, int size, String sortedBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortedBy));
-        return billsDAO.findAllByAmount(importo, pageable);
+        Page<Bill> pageBill = billsDAO.findAllByAmount(importo, pageable);
+        if (pageBill.isEmpty()) {
+            throw new NotFoundException("Non sono presenti fatture con l'importo inserito");
+        } else {
+            return pageBill;
+        }
     }
 
 
