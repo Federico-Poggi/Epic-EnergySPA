@@ -1,26 +1,15 @@
 package team6.epicenergyspa.payload.address;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
-public record NewAddressDTO(@NotEmpty(message = "La via è obbligatoria") @Size(min = 5, message = "la via deve avere "
-        + "minimo 5 caratteri") String via,
+public record NewAddressDTO(@NotNull(message = "La via deve essere inserita") String street,
+                            @NotNull(message = "L'indirizzo deve avere un numero civico") String civicNumber,
+                            @NotNull(message = "Il comune deve essere inserito") String municipalityName,
+                            @NotNull(message = "Lo zipcode deve essere inserito") int zipCode,
+                            @NotNull(message = "La sigla della provincia deve essere inserita") String provinceAbbrevation,
+                            @Nullable String typeSede
 
-                            @NotNull @Size(min = 2, max = 2) String sigla,
-
-                            @NotEmpty(message = "Il civico è obbligatorio") @Size(min = 5, message = "Il civico deve "
-                                    + "avere minimo 5 caratteri") String civico,
-                            @NotEmpty(message = "La località è obbligatoria") @Size(min = 5, message =
-                                    "La località " + "deve " + "avere" + " minimo 5 " + "caratteri") String localita,
-
-                            @NotEmpty(message = "Il comune bisogna inserirlo")
-                            String comune,
-
-                            @NotNull(message = "IL cap è obbligatoria") @Size(min = 5, max = 5, message =
-                                    "Il cap " + "dev'essere di 5 " + "cifre") int cap
-
-                            // andranno aggiunti anche il comune e la provincia
 ) {
 
 }

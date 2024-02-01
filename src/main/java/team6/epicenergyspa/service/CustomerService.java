@@ -12,42 +12,60 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.exceptions.NotFoundException;
-
+import team6.epicenergyspa.model.Address;
 import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.model.CustomerType;
+import team6.epicenergyspa.payload.address.NewAddressDTO;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;
 import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
+import team6.epicenergyspa.repository.AddressDAO;
 import team6.epicenergyspa.repository.CustomersDAO;
+import team6.epicenergyspa.repository.MunicipalityDAO;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
     @Autowired
     private CustomersDAO customersDAO;
 
+    @Autowired
+    private AddresService addresService;
+
     private Cloudinary cloudinaryUploader;
 
+    @Autowired
+    private MunicipalityDAO municipalityDAO;
+
+    @Autowired
+    AddressDAO addressDAO;
+
     //FIND ALL CUSTOMERS
-    public Page<Customer> getCustomers( int page, int size, String orderBy){
+    public Page<Customer> getCustomers(int page, int size, String orderBy) {
         if (size >= 25) size = 25;
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return customersDAO.findAll(pageable);
     }
+
     //GET CUSTOMER BY ID
-    public Customer findById( long id) {
-        return customersDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
+    public Customer findById(Long id) {
+        return customersDAO.findById(id)
+                           .orElseThrow(() -> new NotFoundException(id));
     }
+
     //CREATE NEW CUSTOMER
-    public NewCustomerRespDTO save(NewCustomerDTO body, BindingResult bd){
-        if(bd.hasErrors()){
-            throw new BadRequestException("Controlla i campi inseriti");
-        }
+    public NewCustomerRespDTO save(NewCustomerDTO body) {
+
         if (customersDAO.existsByVatNumber(body.vatNumber())) {
             throw new BadRequestException("Customer with the same vatNumber is already registered!");
         }
+        Address legalSite = addressDAO.findById(body.legalSite())
+                                      .orElseThrow(() -> new NotFoundException("non ce"));
+        Optional<Address> operativeSite = addressDAO.findById(body.operativeSite());
         Customer customer = new Customer();
         customer.setCompanyName(body.companyName());
         customer.setCustomerType(CustomerType.valueOf(body.customerType()));
@@ -63,18 +81,36 @@ public class CustomerService {
         customer.setContactSurname(body.contactSurname());
         customer.setContactPhone(body.contactPhone());
         customer.setCompanyLogo(body.companyLogo());
-        customer.setAddresses(body.addresses());
-        customersDAO.save(customer);
+        if (operativeSite.isPresent()) {
+            Address newOperative = operativeSite.get();
+            customer.getAddresses()
+                    .add(newOperative);
+            customer.getAddresses()
+                    .add(legalSite);
+            legalSite.setCustomer(customer);
+            newOperative.setCustomer(customer);
+            customersDAO.save(customer);
+            addressDAO.updateAddressCustomer(customer, legalSite.getId());
+            addressDAO.updateAddressCustomer(customer, newOperative.getId());
+        } else {
+            customer.getAddresses()
+                    .add(legalSite);
+            legalSite.setCustomer(customer);
+            customersDAO.save(customer);
+            addressDAO.updateAddressCustomer(customer, legalSite.getId());
+        }
         return new NewCustomerRespDTO(customer.getId());
     }
+
     //DELETE A CUSTOMER
-    public void FindByIdAndDeleteCustomer(long id){
-        Customer found= this.findById(id);
+    public void FindByIdAndDeleteCustomer(long id) {
+        Customer found = this.findById(id);
         customersDAO.delete(found);
     }
+
     //UPDATE A CUSTOMER
-    public Customer FindByIdAndUpdateCustomer(long id,Customer body){
-        Customer found= this.findById(id);
+    public Customer FindByIdAndUpdateCustomer(long id, Customer body) {
+        Customer found = this.findById(id);
         found.setCompanyName(body.getCompanyName());
         found.setCustomerType(body.getCustomerType());
         found.setVatNumber(body.getVatNumber());
@@ -91,26 +127,30 @@ public class CustomerService {
         found.setCompanyLogo(body.getCompanyLogo());
         return customersDAO.save(found);
     }
-    public Customer uploadImage( MultipartFile file, long customerId) throws IOException {
+
+    public Customer uploadImage(MultipartFile file, long customerId) throws IOException {
         // Upload on Cloudinary
-        String url = (String)  cloudinaryUploader.uploader()
-                .upload(file.getBytes(), ObjectUtils.emptyMap())
-                .get("url");//obtaining result from update
+        String url = (String) cloudinaryUploader.uploader()
+                                                .upload(file.getBytes(), ObjectUtils.emptyMap())
+                                                .get("url");//obtaining result from update
 
         Customer found = customersDAO.findById(customerId)
-                .orElseThrow(() -> new NotFoundException("Customer not found"));
+                                     .orElseThrow(() -> new NotFoundException("Customer not found"));
 
         found.setCompanyLogo(url);
         customersDAO.save(found);
         return found;
     }
-    public String uploadImageString( MultipartFile body) throws IOException {
+
+    public String uploadImageString(MultipartFile body) throws IOException {
         String url = (String) cloudinaryUploader.uploader()
-                .upload(body.getBytes(), ObjectUtils.emptyMap()).get("url");
-                // save url a  db
+                                                .upload(body.getBytes(), ObjectUtils.emptyMap())
+                                                .get("url");
+        // save url a  db
         return url;
 
     }
+
     //QUERIES
     //ORDERING
     public List<Customer> getAllCustomersOrderedByName() {
@@ -129,12 +169,12 @@ public class CustomerService {
         return customersDAO.findAllByOrderByLastContactDateAsc();
     }
 
- /*  public List<Customer> getAllCustomersOrderedByProvince(String province) {
-        return customersDAO.findAllByAddress_ProvinceOrderByProvinceNameAsc(province);
-    }
-*/
+    /*  public List<Customer> getAllCustomersOrderedByProvince(String province) {
+           return customersDAO.findAllByAddress_ProvinceOrderByProvinceNameAsc(province);
+       }
+   */
     //FILTERING
-    public List<Customer> getAllCustomersWithTurnoverEquals( LocalDate annualTurnover) {
+    public List<Customer> getAllCustomersWithTurnoverEquals(LocalDate annualTurnover) {
         return customersDAO.findAllByAnnualTurnoverEquals(annualTurnover);
     }
 

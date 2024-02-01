@@ -7,7 +7,7 @@ import team6.epicenergyspa.model.Municipality;
 import java.util.Optional;
 
 @Repository
-public interface MunicipalityDAO extends JpaRepository<Municipality,Long> {
+public interface MunicipalityDAO extends JpaRepository<Municipality, Long> {
     Municipality getMunicipalityByMunicipalityName(String municipalityName);
-    Optional<Municipality> findByMunicipalityName(String municipalityName);
+    /*Optional<Municipality> findBy(String municipalityName);*/
 }

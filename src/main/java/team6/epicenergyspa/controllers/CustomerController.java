@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.model.Customer;
+import team6.epicenergyspa.payload.address.NewAddressDTO;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;
 import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
 import team6.epicenergyspa.service.CustomerService;
@@ -24,35 +25,38 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/{Id}")
-    public Customer getCustomerById ( @PathVariable long id ) {
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable Long id) {
         return customerService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public NewCustomerRespDTO saveCustomer ( @RequestBody @Validated NewCustomerDTO payload, BindingResult validation ) throws BadRequestException {
+    public NewCustomerRespDTO saveCustomer(@RequestBody @Validated NewCustomerDTO payload, BindingResult validation
+                                          ) throws BadRequestException {
         if (validation.hasErrors()) {
-            throw new BadRequestException("Errori nella validazione"+ validation.getAllErrors());
+            throw new BadRequestException("Errori nella validazione" + validation.getAllErrors());
         } else {
-         //   Customer newCustomer = customerService.save(payload,validation);
-            return customerService.save(payload, validation);
+            //   Customer newCustomer = customerService.save(payload,validation);
+            return customerService.save(payload);
         }
     }
 
     @PutMapping("/{id}")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+    // @PreAuthorize("hasAuthority('ADMIN')")
     public Customer findByIdAndUpdate(@PathVariable long id, @RequestBody Customer body) {
         return this.customerService.FindByIdAndUpdateCustomer(id, body);
     }
 
     //endpoint che accetta immagini con payload NON JSON!!!  MA MULTIPLATFORM DATA , ritorna una stringa
     @PostMapping("/upload")
-    public Customer uploadImage(@RequestParam("avatar") MultipartFile file,@PathVariable long customerId) throws IOException {
+    public Customer uploadImage(@RequestParam("avatar") MultipartFile file, @PathVariable long customerId) throws
+                                                                                                           IOException {
         return customerService.uploadImage(file, customerId);
 
     }
+
     //FOR QUERIES
     //ORDERING
     @GetMapping("/order-by-name")
@@ -82,17 +86,23 @@ public class CustomerController {
 
     //FILTERING
     @GetMapping("/filter-by-turnover")
-    public List<Customer> getAllCustomersWithTurnoverEquals(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate annualTurnover) {
+    public List<Customer> getAllCustomersWithTurnoverEquals(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate annualTurnover
+                                                           ) {
         return customerService.getAllCustomersWithTurnoverEquals(annualTurnover);
     }
 
     @GetMapping("/filter-by-entering-date")
-    public List<Customer> getAllCustomersWithEnteringDateEquals(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enteringDate) {
+    public List<Customer> getAllCustomersWithEnteringDateEquals(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enteringDate
+                                                               ) {
         return customerService.getAllCustomersWithEnteringDateEquals(enteringDate);
     }
 
     @GetMapping("/filter-by-last-contact-date")
-    public List<Customer> getAllCustomersWithLastContactDateGreaterThanEqual(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastContactDate) {
+    public List<Customer> getAllCustomersWithLastContactDateGreaterThanEqual(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastContactDate
+                                                                            ) {
         return customerService.getAllCustomersWithLastContactDateEquals(lastContactDate);
     }
 

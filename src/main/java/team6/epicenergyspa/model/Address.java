@@ -1,5 +1,7 @@
 package team6.epicenergyspa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,27 +16,37 @@ import lombok.ToString;
 @Entity
 @Table(name = "addresses")
 public class Address {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String street;
+
     private String civic;
-    private String location;
+
     private int zipCode;
-    /*private String provinceName;
-    private String provinceAcronym;
-    private String municipalityName;
-    private String companyName;*/
 
+    private String provinceAbbrevation;
 
-    @ManyToOne @JoinColumn(name = "customer_id") private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    @JsonBackReference
+    private Customer customer;
 
-    @OneToOne Municipality municipality;
+    @ManyToOne
+    @JsonBackReference
+    Municipality municipality;
 
-    public Address(String street, String civic, String location, int zipCode) {
+    /*public Address(String street,
+                   String civic,
+                   String location,
+                   int zipCode
+                  ) {
         this.street = street;
         this.civic = civic;
         this.location = location;
         this.zipCode = zipCode;
         //
         //
-    }
+    }*/
 }
