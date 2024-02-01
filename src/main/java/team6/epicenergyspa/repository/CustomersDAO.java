@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface CustomersDAO extends JpaRepository<Customer, Long> {
 
     boolean existsByVatNumber(long vatNumber);
+
     //ORDER
     //Use "Desc" instead of "Asc" to change the order
     List<Customer> findAllByOrderByCompanyNameAsc();
@@ -22,18 +23,7 @@ public interface CustomersDAO extends JpaRepository<Customer, Long> {
     List<Customer> findAllByOrderByEnteringDateAsc();
 
     List<Customer> findAllByOrderByLastContactDateAsc();
-
-    // TO DO TOGETHER SEEING CSV
-   // List<Customer> findAllByAddress_ProvinceOrderByProvinceNameAsc(String province);
-
-    //FILTER
-    List<Customer> findAllByAnnualTurnoverEquals( LocalDate annualTurnover);
-
-    List<Customer> findAllByEnteringDateEquals(LocalDate enteringDate);
-
-    List<Customer> findAllByLastContactDateEquals(LocalDate lastContactDate);
-
-    List<Customer> findAllByCompanyNameContaining(String companyName);
+    
 
 }
 

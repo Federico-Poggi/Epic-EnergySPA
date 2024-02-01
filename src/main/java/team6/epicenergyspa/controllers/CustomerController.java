@@ -1,6 +1,7 @@
 package team6.epicenergyspa.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,8 +34,8 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public NewCustomerRespDTO saveCustomer(@RequestBody @Validated NewCustomerDTO payload, BindingResult validation
-                                          ) throws BadRequestException {
+    public NewCustomerRespDTO saveCustomer(@RequestBody @Validated NewCustomerDTO payload, BindingResult validation)
+            throws BadRequestException {
         if (validation.hasErrors()) {
             throw new BadRequestException("Errori nella validazione" + validation.getAllErrors());
         } else {
@@ -44,17 +45,27 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    // @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public Customer findByIdAndUpdate(@PathVariable long id, @RequestBody Customer body) {
         return this.customerService.FindByIdAndUpdateCustomer(id, body);
     }
 
     //endpoint che accetta immagini con payload NON JSON!!!  MA MULTIPLATFORM DATA , ritorna una stringa
+
+
     @PostMapping("/upload")
-    public Customer uploadImage(@RequestParam("avatar") MultipartFile file, @PathVariable long customerId) throws
-                                                                                                           IOException {
+    public Customer uploadImage(@RequestParam("avatar") MultipartFile file, @PathVariable long customerId)
+            throws IOException {
         return customerService.uploadImage(file, customerId);
 
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Customer> getCustomer(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "5") int size,
+                                      @RequestParam(defaultValue = "id") String sortedBy) {
+        return customerService.getCustomers(page, size, sortedBy);
     }
 
     //FOR QUERIES
@@ -78,37 +89,6 @@ public class CustomerController {
     public List<Customer> getAllCustomersOrderedByLastContactDate() {
         return customerService.getAllCustomersOrderedByLastContactDate();
     }
-/*
-    @GetMapping("/order-by-province")
-    public List<Customer> getAllCustomersOrderedByProvince(String province) {
-        return customerService.getAllCustomersOrderedByProvince(province);
-    }*/
 
-    //FILTERING
-    @GetMapping("/filter-by-turnover")
-    public List<Customer> getAllCustomersWithTurnoverEquals(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate annualTurnover
-                                                           ) {
-        return customerService.getAllCustomersWithTurnoverEquals(annualTurnover);
-    }
-
-    @GetMapping("/filter-by-entering-date")
-    public List<Customer> getAllCustomersWithEnteringDateEquals(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enteringDate
-                                                               ) {
-        return customerService.getAllCustomersWithEnteringDateEquals(enteringDate);
-    }
-
-    @GetMapping("/filter-by-last-contact-date")
-    public List<Customer> getAllCustomersWithLastContactDateGreaterThanEqual(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastContactDate
-                                                                            ) {
-        return customerService.getAllCustomersWithLastContactDateEquals(lastContactDate);
-    }
-
-    @GetMapping("/filter-by-name")
-    public List<Customer> getAllCustomersWithCompanyNameContaining(@RequestParam String partOfCompanyName) {
-        return customerService.getAllCustomersWithCompanyNameContaining(partOfCompanyName);
-    }
 }
 

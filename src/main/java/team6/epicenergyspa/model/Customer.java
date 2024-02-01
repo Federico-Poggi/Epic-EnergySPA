@@ -42,7 +42,7 @@ public class Customer {
     private LocalDate lastContactDate;
 
     @Column(name = "annual_turnover")
-    private LocalDate annualTurnover;
+    private Double annualTurnover;
 
     @Column(name = "pec")
     private String pec;
