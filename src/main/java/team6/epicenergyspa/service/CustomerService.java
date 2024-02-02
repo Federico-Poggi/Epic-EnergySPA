@@ -24,6 +24,7 @@ import team6.epicenergyspa.repository.CustomersDAO;
 import team6.epicenergyspa.repository.MunicipalityDAO;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,8 +78,8 @@ public class CustomerService {
         customer.setCustomerType(CustomerType.valueOf(body.customerType()));
         customer.setVatNumber(body.vatNumber());
         customer.setEmail(body.email());
-        customer.setEnteringDate(body.enteringDate());
-        customer.setLastContactDate(body.lastContactDate());
+        customer.setEnteringDate(LocalDate.now());
+        /*customer.setLastContactDate(body.lastContactDate());*/
         customer.setAnnualTurnover(body.annualTurnover());
         customer.setPec(body.pec());
         customer.setPhone(body.phone());
@@ -116,7 +117,8 @@ public class CustomerService {
 
         Customer customer = this.findById(id);
 
-        if (!customer.getAddresses().isEmpty()) {
+        if (!customer.getAddresses()
+                     .isEmpty()) {
 
             List<Address> addressList = customer.getAddresses();
 
@@ -126,7 +128,8 @@ public class CustomerService {
             });
         }
 
-        if (!customer.getBills().isEmpty()) {
+        if (!customer.getBills()
+                     .isEmpty()) {
 
             List<Bill> billList = customer.getBills();
 

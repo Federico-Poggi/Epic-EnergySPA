@@ -65,10 +65,11 @@ public class CustomerController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<Customer> getCustomer(@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "id") String sortedBy) {
+                                      @RequestParam(defaultValue = "5") int size,
+                                      @RequestParam(defaultValue = "id") String sortedBy) {
         return customerService.getCustomers(page, size, sortedBy);
     }
+
 
     // FOR QUERIES
     // ORDERING
@@ -77,26 +78,26 @@ public class CustomerController {
     // stringa o data
     /*
      * @GetMapping("/filter")
-     * 
+     *
      * @ResponseStatus(HttpStatus.FOUND)
      * public Page<Customer> filteredBy(@RequestParam(defaultValue = "0") int page,
-     * 
+     *
      * @RequestParam(defaultValue = "5") int size,
-     * 
+     *
      * @RequestParam(defaultValue = "id") String sortedBy,
-     * 
+     *
      * @RequestParam(required = true) String filteredBy,
-     * 
+     *
      * @RequestParam(required = false) Double annualTurnover) {
      *//*
-        * if(annualTurnover!=null){
-        * return customerService.filterByTurnover(annualTurnover,page,size,sortedBy);
-        * }else{
-        * 
-        * }
-        *//*
-           * }
-           */
+     * if(annualTurnover!=null){
+     * return customerService.filterByTurnover(annualTurnover,page,size,sortedBy);
+     * }else{
+     *
+     * }
+     *//*
+     * }
+     */
 
     @DeleteMapping("/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
