@@ -35,7 +35,7 @@ public class SecurityConfig {
         httpSecurity.cors(Customizer.withDefaults());
         httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/**")
-                                                             .permitAll());
+                .permitAll());
         return httpSecurity.build();
     }
 
