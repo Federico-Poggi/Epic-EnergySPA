@@ -63,7 +63,7 @@ public class BillService {
         newBill.setBillNumber(sizeList + 1);
         newBill.setCustomer(customer);
         billsDAO.save(newBill);
-        return new NewBillResponseDTO(newBill.getId(), newBill.getBillNumber());
+        return new NewBillResponseDTO(newBill.getId(), newBill.getBillNumber(), customer.getId());
     }
 
     public Page<Bill> getByState(String state, int page, int size, String sortedBy) {
@@ -120,7 +120,8 @@ public class BillService {
     }
 
     public void deleteBill(long idFattura) {
-        Bill bill = billsDAO.findById(idFattura).orElseThrow(() -> new NotFoundException("Fattura con id " + idFattura + " non trovata nel database"));
+        Bill bill = billsDAO.findById(idFattura)
+                            .orElseThrow(() -> new NotFoundException("Fattura con id " + idFattura + " non trovata " + "nel database"));
         billsDAO.delete(bill);
     }
 }
