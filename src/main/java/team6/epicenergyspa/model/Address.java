@@ -1,6 +1,7 @@
 package team6.epicenergyspa.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -28,6 +29,9 @@ public class Address {
 
     private String provinceAbbrevation;
 
+    @Enumerated(EnumType.STRING)
+    private TipoSede tipoSede;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonBackReference
@@ -36,17 +40,5 @@ public class Address {
     @ManyToOne
     @JsonBackReference
     Municipality municipality;
-
-    /*public Address(String street,
-                   String civic,
-                   String location,
-                   int zipCode
-                  ) {
-        this.street = street;
-        this.civic = civic;
-        this.location = location;
-        this.zipCode = zipCode;
-        //
-        //
-    }*/
+    
 }

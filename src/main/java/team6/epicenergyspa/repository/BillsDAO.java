@@ -14,6 +14,8 @@ import java.util.Optional;
 
 @Repository
 public interface BillsDAO extends JpaRepository<Bill, Long> {
+    Page<Bill> findAll(Pageable p);
+
     Optional<Bill> findByBillNumber(Long billNumber);
 
     Page<Bill> findAllByCustomer_Id(Long id, Pageable p);

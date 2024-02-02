@@ -8,23 +8,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import team6.epicenergyspa.exceptions.BadRequestException;
 import team6.epicenergyspa.exceptions.NotFoundException;
 import team6.epicenergyspa.model.Address;
+import team6.epicenergyspa.model.Bill;
 import team6.epicenergyspa.model.Customer;
 import team6.epicenergyspa.model.CustomerType;
-import team6.epicenergyspa.payload.address.NewAddressDTO;
+import team6.epicenergyspa.model.TipoSede;
 import team6.epicenergyspa.payload.customer.NewCustomerDTO;
 import team6.epicenergyspa.payload.customer.NewCustomerRespDTO;
 import team6.epicenergyspa.repository.AddressDAO;
+import team6.epicenergyspa.repository.BillsDAO;
 import team6.epicenergyspa.repository.CustomersDAO;
 import team6.epicenergyspa.repository.MunicipalityDAO;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,9 +43,12 @@ public class CustomerService {
     @Autowired
     AddressDAO addressDAO;
 
+    @Autowired
+    BillsDAO billsDAO;
+
     //FIND ALL CUSTOMERS
     public Page<Customer> getCustomers(int page, int size, String orderBy) {
-        if (size >= 25) size = 25;
+        if (size >= 50) size = 50;
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return customersDAO.findAll(pageable);
     }
@@ -56,6 +58,10 @@ public class CustomerService {
         return customersDAO.findById(id)
                            .orElseThrow(() -> new NotFoundException(id));
     }
+
+   /* public Page<Customer> filterBy() {
+
+    }*/
 
     //CREATE NEW CUSTOMER
     public NewCustomerRespDTO save(NewCustomerDTO body) {
@@ -88,6 +94,8 @@ public class CustomerService {
             customer.getAddresses()
                     .add(legalSite);
             legalSite.setCustomer(customer);
+            legalSite.setTipoSede(TipoSede.LEGALSITE);
+            newOperative.setTipoSede(TipoSede.OPERATIVESITE);
             newOperative.setCustomer(customer);
             customersDAO.save(customer);
             addressDAO.updateAddressCustomer(customer, legalSite.getId());
@@ -96,6 +104,7 @@ public class CustomerService {
             customer.getAddresses()
                     .add(legalSite);
             legalSite.setCustomer(customer);
+            legalSite.setTipoSede(TipoSede.LEGALSITE);
             customersDAO.save(customer);
             addressDAO.updateAddressCustomer(customer, legalSite.getId());
         }
@@ -104,8 +113,31 @@ public class CustomerService {
 
     //DELETE A CUSTOMER
     public void FindByIdAndDeleteCustomer(long id) {
-        Customer found = this.findById(id);
-        customersDAO.delete(found);
+
+        Customer customer = this.findById(id);
+
+        if (!customer.getAddresses().isEmpty()) {
+
+            List<Address> addressList = customer.getAddresses();
+
+            addressList.forEach(address -> {
+                address.setCustomer(null);
+                addressDAO.save(address);
+            });
+        }
+
+        if (!customer.getBills().isEmpty()) {
+
+            List<Bill> billList = customer.getBills();
+
+            billList.forEach(bill -> {
+                bill.setCustomer(null);
+                billsDAO.save(bill);
+            });
+
+        }
+
+        customersDAO.delete(customer);
     }
 
     //UPDATE A CUSTOMER
@@ -169,24 +201,4 @@ public class CustomerService {
         return customersDAO.findAllByOrderByLastContactDateAsc();
     }
 
-    /*  public List<Customer> getAllCustomersOrderedByProvince(String province) {
-           return customersDAO.findAllByAddress_ProvinceOrderByProvinceNameAsc(province);
-       }
-   */
-    //FILTERING
-    public List<Customer> getAllCustomersWithTurnoverEquals(LocalDate annualTurnover) {
-        return customersDAO.findAllByAnnualTurnoverEquals(annualTurnover);
-    }
-
-    public List<Customer> getAllCustomersWithEnteringDateEquals(LocalDate enteringDate) {
-        return customersDAO.findAllByEnteringDateEquals(enteringDate);
-    }
-
-    public List<Customer> getAllCustomersWithLastContactDateEquals(LocalDate lastContactDate) {
-        return customersDAO.findAllByLastContactDateEquals(lastContactDate);
-    }
-
-    public List<Customer> getAllCustomersWithCompanyNameContaining(String companyName) {
-        return customersDAO.findAllByCompanyNameContaining(companyName);
-    }
 }

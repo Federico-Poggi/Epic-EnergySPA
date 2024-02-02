@@ -26,7 +26,7 @@ public class BillsController {
 
     //filtered by cliente
     @GetMapping
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public Page<Bill> getBillsFilteredBy(@RequestParam(required = false) Long idCustomer,
                                          @RequestParam(required = false) String state,
                                          @RequestParam(required = false) String date,
@@ -34,8 +34,7 @@ public class BillsController {
                                          @RequestParam(required = false) Double importo,
                                          @RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "5") int size,
-                                         @RequestParam(defaultValue = "id") String sortedBy
-                                        ) {
+                                         @RequestParam(defaultValue = "id") String sortedBy) {
         if (state != null) {
             return billService.getByState(state, page, size, sortedBy);
         } else if (date != null) {
@@ -59,8 +58,7 @@ public class BillsController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public NewBillResponseDTO save(@PathVariable Long idCustomer, @RequestBody @Validated NewBillDTO billDto,
 
-                                   BindingResult bd
-                                  ) {
+                                   BindingResult bd) {
         if (bd.hasErrors()) {
             throw new BadRequestException("Controlla i campi inseriti");
         } else {
@@ -73,5 +71,13 @@ public class BillsController {
     public NewStatusDTO changeStatus(@PathVariable Long idFattura) {
         return billService.statusUpdate(idFattura);
     }
+
+    @DeleteMapping("/{idFattura}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteBill(@PathVariable long idFattura) {
+        billService.deleteBill(idFattura);
+    }
+
 
 }
